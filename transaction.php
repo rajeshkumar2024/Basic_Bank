@@ -49,6 +49,10 @@ $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
             echo('<p style="color: green; padding-top:40px; font-size: -webkit-large;" >' . htmlentities($_SESSION['success']) . "</p>\n");
             unset($_SESSION['success']);
         }
+        if (isset($_SESSION['error'])) {
+            echo('<p style="color: red; padding-top:40px; font-size: -webkit-large;" >' . htmlentities($_SESSION['error']) . "</p>\n");
+            unset($_SESSION['error']);
+        }
     ?>
 
 <h2 id="headtxt">Transactions</h2>

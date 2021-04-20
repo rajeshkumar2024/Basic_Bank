@@ -14,6 +14,7 @@
             $payeeName = $data['Name'];
             $payeeBal = $data['Balance'];
         }
+        if ($payeeBal >= $_POST['amount']){
         $payeeFinal = $payeeBal-$_POST['amount'];
         
 
@@ -27,6 +28,7 @@
         }
         $recFinal = $recBal + $_POST['amount'];
         
+        
 
         $sql = $pdo->prepare('INSERT INTO transaction (Payee, Receipient,Amount) VALUES ( :payee,:recipient,:amount)');
         $sql->execute(array(
@@ -36,12 +38,19 @@
         );
 
 
+
         $sql3 = $pdo->query("UPDATE customer SET Balance = '$payeeFinal' WHERE uid = ".$_POST['payee']);
         $sql4 = $pdo->query("UPDATE customer SET Balance = '$recFinal' WHERE uid = ".$_POST['recipient']);
+        
 
     $_SESSION['success'] = "Transfer Successful.";
     header('Location: ./transaction.php');
     return;
+        }
+        else{
+            $_SESSION['error'] = "Insufficient Balance!";
+            header('Location: ./transaction.php');
+        }
     }
     
     $id = 0;
